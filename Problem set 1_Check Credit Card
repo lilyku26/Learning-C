@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <math.h>
+int main(void)
+{
+    long number;
+    //ask for credit card number
+    do
+    {
+        number = get_long("Numbers:");
+    }
+    while (number<0);
+
+    //knowing how many digits first
+    int count = 0;
+    long cardnum = number;
+    while (cardnum != 0)
+    {
+        cardnum /= 10;
+        ++count;
+    }
+    printf("%d\n",count);
+    
+    int c=count-1;
+    int c_1=count-2;
+    long c_c= pow(10,c_1);
+    int long first = number/pow(10,c); //找出首位
+    int  second = number/c_c % 10;     //找出第二位
+    int two_digit = first*10+second;   //找出前兩位數字
+    
+    printf("%li\n",first);
+    printf("%i\n",second);
+    printf("%i\n",two_digit);
+
+    // set initial values
+    long num = 0;
+    int new_num=0;
+    int odds=0;
+    int evens=0;
+    int a=0;
+    int b=0;
+
+    //do the loop for checking odds and evens digits
+    for (int i=0; i<20; i++)
+    {
+        num = number % 10;
+        number = (number-num)/10;
+
+        if (i%2 ==0) //odds num sum 奇數位：個位為第一位
+        {
+            if (count%2==0) //若為偶位數
+            {
+                odds+=num;
+            }
+            else            //若為奇位數
+            {
+                new_num=num*2;
+
+                if (new_num >=10)
+                {   //splilt two digit for addition
+                    a = new_num%10;
+                    b=1;
+                    new_num = a+b;
+                }
+                odds+=new_num;
+            }
+        }
+        else //even num sum 偶數位：十位為第二位
+        {
+            if (count%2!=0)  //若為奇位數
+            {
+                evens+=num;
+            }
+            else             //若為偶位數
+            {
+                new_num=num*2;
+                if (new_num >=10)
+                {
+                    a = new_num%10;
+                    b=1;
+                    new_num = a+b;
+                }
+                evens+=new_num;
+            }
+
+        }
+    }
+    int sum = evens+odds;
+
+    printf("%i\n",sum);
+    printf("%i\n",evens);
+    printf("%i\n",odds);
+
+    //the other if loop for checking different credit card
+    if (sum %10 != 0)
+    {
+        printf("INVALID");
+    }
+    else if (two_digit==34 || two_digit==37)
+    {
+        printf("AMEX");
+    }
+    else if (two_digit==51 || two_digit==52 ||two_digit==53 || two_digit==54 || two_digit==55)
+    {
+        printf("MASTERCARD");
+    }
+    else if (first ==4)
+    {
+        printf("VISA");
+    }
+   printf("\n");
+}
