@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <math.h>
+int main(void)
+{
+  float dollars ;
+  do
+  {
+   dollars = get_float("Changed owed:");
+  }
+  while (dollars<0);
+  int cents = round(dollars*100);
+  int quaters= (cents/25);
+  int dimes= (cents-25*quaters)/10;
+  int nickels= (cents-25*quaters-10*dimes)/5;
+  int pennys = (cents-25*quaters-10*dimes-5*nickels);
+  int coins = (quaters+dimes+nickels+pennys);
+  printf("%i\n",coins);
+
+}
